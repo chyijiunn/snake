@@ -14,12 +14,12 @@ oled.fill(0)
 
 x = random.randint(0,127)
 y = random.randint(0,63)
-button_caculation = random.randint(0,4)
+direction = random.randint(0,4)
 path =[]
 
 def draw():
     oled.fill(0)
-    data = open('boom','r')
+    data = open('data/pics/boom','r')
     for line in data:
         a = line.split()
         for i in range(len(a)):
@@ -30,12 +30,33 @@ def draw():
     oled.show()
 
 def button_thread():
-    global button_caculation
+    global direction
     while True:
-        if buttonR.value() == 0:button_caculation = button_caculation + 1
-        if buttonL.value() == 0:button_caculation = button_caculation - 1
+        if buttonR.value() == 0:direction = direction + 1
+        if buttonL.value() == 0:direction = direction - 1
         if buttonR.value() == 0 and buttonL.value() == 0:break
-        sleep(0.15) 
+        sleep(0.15)
+        
+def buzz():
+    buzzer.duty_u16(1000)
+    sleep(1)
+    buzzer.duty_u16(0)
+
+def scoreshow():
+    score = len(path)-1
+    oled.text('score '+str(score),40,55)
+        
+    data = open('data/record/record')
+    top = int(data.readline())
+    if score > top:
+        data = open('data/record/record','w')
+        data.write(str(score))
+        top = score
+        
+    oled.text('TOP '+str(top),0,0)
+    data.close()
+    oled.show()
+    
 _thread.start_new_thread(button_thread, ())
 
 while True: 
@@ -43,23 +64,19 @@ while True:
     if x <0: x = 128
     if y > 64 : y =0
     if y <0 : y = 64
-    if button_caculation % 4 == 0:x = x + 1
-    if button_caculation % 4 == 1:y = y + 1
-    if button_caculation % 4 == 2:x = x - 1
-    if button_caculation % 4 == 3:y = y - 1
+    if direction % 4 == 0:x = x + 1
+    if direction % 4 == 1:y = y + 1
+    if direction % 4 == 2:x = x - 1
+    if direction % 4 == 3:y = y - 1
     if buttonR.value() == 0 and buttonL.value() == 0:break
     
     oled.pixel(x,y,1)
     oled.show()
     
     if [x,y] in path:
-        score = len(path)-1
-        buzzer.duty_u16(1000)
+        buzz()
         draw()
-        oled.text('score:'+str(score),30,55)
-        oled.show()
-        #sleep(0.1)
-        buzzer.duty_u16(0)
+        scoreshow()
         break
 
     path.append([x,y])

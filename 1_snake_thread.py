@@ -12,13 +12,13 @@ oled.fill(0)
 
 x = 64
 y = 32
-button_caculation = 0
+direction = 0
 
 def button_thread():
-    global button_caculation
+    global direction
     while True:
-        if buttonR.value() == 0:button_caculation = button_caculation + 1
-        if buttonL.value() == 0:button_caculation = button_caculation - 1
+        if buttonR.value() == 0:direction = direction + 1
+        if buttonL.value() == 0:direction = direction - 1
         if buttonR.value() == 0 and buttonL.value() == 0:break
         sleep(0.1)
     
@@ -29,10 +29,10 @@ while True:
     if x <0: x = 128
     if y > 64 : y =0
     if y <0 : y = 64
-    if button_caculation % 4 == 0:x = x + 1
-    if button_caculation % 4 == 1:y = y + 1
-    if button_caculation % 4 == 2:x = x - 1
-    if button_caculation % 4 == 3:y = y - 1
+    if direction % 4 == 0:x = x + 1
+    if direction % 4 == 1:y = y + 1
+    if direction % 4 == 2:x = x - 1
+    if direction % 4 == 3:y = y - 1
     if buttonR.value() == 0 and buttonL.value() == 0:break
     oled.pixel(x,y,1)
     oled.show()

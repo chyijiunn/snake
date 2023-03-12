@@ -13,18 +13,18 @@ buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 oled.fill(0)
 
 #以下設定出發點和方向(0~3 = 右下左上)
-x = 50
-y = 37
-button_caculation = 0
+x = 39
+y = 52
+direction = 0
 
 #以下設定終點
-goal = [[79,36],[79,37],[79,38]]
+goal = [[88,12],[88,13]]
 
 path =[]
 
 def maze():
     oled.fill(0)
-    data = open('maze_S','r')
+    data = open('data/maze/maze_M','r')
     for line in data:
         a = line.split()
         for i in range(len(a)):
@@ -36,45 +36,59 @@ def maze():
     oled.show()
 
 def button_thread():
-    global button_caculation
+    global direction
     while True:
-        if buttonR.value() == 0:button_caculation = button_caculation + 1
-        if buttonL.value() == 0:button_caculation = button_caculation - 1
+        if buttonR.value() == 0:direction = direction + 1
+        if buttonL.value() == 0:direction = direction - 1
         if buttonR.value() == 0 and buttonL.value() == 0:break
         sleep(0.15) 
+
+def scoreshow():
+    score = len(path)-432
+    oled.text('score '+str(score),40,55)
+        
+    data = open('data/record/record_mazeS')
+    top = int(data.readline())
+    if score > top:
+        data = open('data/record/record_mazeS','w')
+        data.write(str(score))
+        top = score
+        
+    oled.text('TOP '+str(top),40,0)
+    data.close()
+    oled.show()
+    
+def buzz():
+    buzzer.duty_u16(1000)
+    sleep(1)
+    buzzer.duty_u16(0)
+
+maze()
 _thread.start_new_thread(button_thread, ())
 
 
-maze()
 while True: 
     if x > 128: x =0
     if x <0: x = 128
     if y > 64 : y =0
     if y <0 : y = 64
-    if button_caculation % 4 == 0:x = x + 1
-    if button_caculation % 4 == 1:y = y + 1
-    if button_caculation % 4 == 2:x = x - 1
-    if button_caculation % 4 == 3:y = y - 1
+    if direction % 4 == 0:x = x + 1
+    if direction % 4 == 1:y = y + 1
+    if direction % 4 == 2:x = x - 1
+    if direction % 4 == 3:y = y - 1
     if buttonR.value() == 0 and buttonL.value() == 0:break
     
     oled.pixel(x,y,1)
     oled.show()
     
     if [x,y] in path:
-        score = len(path)-251
-        buzzer.duty_u16(1000)
-        
-        oled.text('score:'+str(score),30,55)
-        oled.show()
-        #sleep(0.1)
-        buzzer.duty_u16(0)
+        buzz()
+        scoreshow()
         break
     if [x,y] in goal:
-        buzzer.duty_u16(1000)
-        
+        buzz()
         oled.text('Pass!',30,55)
         oled.show()
-        #sleep(0.1)
-        buzzer.duty_u16(0)
         break
     path.append([x,y])
+
