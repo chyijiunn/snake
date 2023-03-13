@@ -12,20 +12,31 @@ buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
 oled.fill(0)
 
-#以下設定出發點和方向(0~3 = 右下左上)
-x = 39
-y = 52
-direction = 0
-
-#以下設定終點
-goal = [[88,12],[88,13]]
-
-path =[]
+mazedataname = 'maze_04'                #MazeFileName
+#出發點，起始分數，出發點不算分數，故為 -1
+goal = [ ]
+path =[ ]
+score =-1
 
 def maze():
+    global direction
+    global x , y
     oled.fill(0)
-    data = open('data/maze/maze_M','r')
-    for line in data:
+
+    data = open('data/maze/'+mazedataname,'r')
+    head = data.readline().split(',')   #第一行 head 資料 str -> list
+    num = len(head)-1                   #計算list內資料量，
+    b = head[:num]                      #後皆換行符號，捨棄
+    
+    direction = int(b[0])           #第 1 碼:方向(0~3 = 右下左上)
+    x = int(b[1])                      # 2~3 :start x ,y
+    y = int(b[2])
+    for i in range(int((num-3)/2)):     # 去掉 b[0]~b[2]，剩下皆為 goal point，計算個數
+        goal.append([b[2*i+3],b[2*i+4]])#加入空白 goal
+
+    #以下處理迷宮座標資料，使用 readlines 讀取剩餘資料
+    mazelist = data.readlines()
+    for line in mazelist:
         a = line.split()
         for i in range(len(a)):
             xAxis = int(a[i].split(',')[0])
@@ -43,14 +54,13 @@ def button_thread():
         if buttonR.value() == 0 and buttonL.value() == 0:break
         sleep(0.15) 
 
-def scoreshow():
-    score = len(path)-432
-    oled.text('score '+str(score),40,55)
-        
-    data = open('data/record/record_mazeS')
+def scoreshow(score):
+    oled.text('score '+str(score),35,55)
+    data = open('data/maze/'+mazedataname+'_r')
     top = int(data.readline())
+    
     if score > top:
-        data = open('data/record/record_mazeS','w')
+        data = open('data/maze/'+mazedataname+'_r','w')
         data.write(str(score))
         top = score
         
@@ -60,35 +70,31 @@ def scoreshow():
     
 def buzz():
     buzzer.duty_u16(1000)
-    sleep(1)
+    sleep(0.1)
     buzzer.duty_u16(0)
-
+    
 maze()
 _thread.start_new_thread(button_thread, ())
 
-
-while True: 
-    if x > 128: x =0
-    if x <0: x = 128
-    if y > 64 : y =0
-    if y <0 : y = 64
-    if direction % 4 == 0:x = x + 1
-    if direction % 4 == 1:y = y + 1
-    if direction % 4 == 2:x = x - 1
-    if direction % 4 == 3:y = y - 1
-    if buttonR.value() == 0 and buttonL.value() == 0:break
+while True:
     
+    if direction % 4 == 0:x += 1
+    if direction % 4 == 1:y +=  1
+    if direction % 4 == 2:x -= 1
+    if direction % 4 == 3:y -= 1
+   
     oled.pixel(x,y,1)
+    score = score + 1
     oled.show()
     
     if [x,y] in path:
         buzz()
-        scoreshow()
+        scoreshow(score)
         break
+    
     if [x,y] in goal:
         buzz()
         oled.text('Pass!',30,55)
         oled.show()
         break
     path.append([x,y])
-

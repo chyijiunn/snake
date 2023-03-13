@@ -12,22 +12,24 @@ buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
 oled.fill(0)
 
-mazedataname = 'maze_03'                #MazeFileName
-                                        #出發點，起始分數，出發點不算分數，故為 -1
+mazedataname = 'maze_01'                #MazeFileName
+#出發點，起始分數，出發點不算分數，故為 -1
 goal = [ ]
 path =[ ]
 score =-1
 
 def maze():
+    global direction
+    global x , y
     oled.fill(0)
-    global direction , x , y
+
     data = open('data/maze/'+mazedataname,'r')
     head = data.readline().split(',')   #第一行 head 資料 str -> list
     num = len(head)-1                   #計算list內資料量，
     b = head[:num]                      #後皆換行符號，捨棄
     
-    direction = int(b[0])               #第 1 碼:方向(0~3 = 右下左上)
-    x = int(b[1])                       # 2~3 :start x ,y
+    direction = int(b[0])           #第 1 碼:方向(0~3 = 右下左上)
+    x = int(b[1])                      # 2~3 :start x ,y
     y = int(b[2])
     for i in range(int((num-3)/2)):     # 去掉 b[0]~b[2]，剩下皆為 goal point，計算個數
         goal.append([b[2*i+3],b[2*i+4]])#加入空白 goal
@@ -53,7 +55,8 @@ def button_thread():
         sleep(0.15) 
 
 def scoreshow(score):
-    oled.text('score '+str(score),35,55)
+    oled.fill_rect(0, 55, 127, 63, 1)
+    oled.text('score '+str(score),35,55,0)
     data = open('data/maze/'+mazedataname+'_r')
     top = int(data.readline())
     
@@ -62,7 +65,8 @@ def scoreshow(score):
         data.write(str(score))
         top = score
         
-    oled.text('TOP '+str(top),40,0)
+    oled.fill_rect(0, 0, 127, 7, 1)
+    oled.text('TOP '+str(top),40,0,0)
     data.close()
     oled.show()
     
@@ -74,12 +78,13 @@ def buzz():
 maze()
 _thread.start_new_thread(button_thread, ())
 
-while True: 
-    if direction % 4 == 0:x = x + 1
-    if direction % 4 == 1:y = y + 1
-    if direction % 4 == 2:x = x - 1
-    if direction % 4 == 3:y = y - 1
+while True:
     
+    if direction % 4 == 0:x += 1
+    if direction % 4 == 1:y +=  1
+    if direction % 4 == 2:x -= 1
+    if direction % 4 == 3:y -= 1
+   
     oled.pixel(x,y,1)
     score = score + 1
     oled.show()
