@@ -11,10 +11,9 @@ buttonR = machine.Pin(3, machine.Pin.IN, machine.Pin.PULL_UP)#press = 0 , unpres
 buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
 oled.fill(0)
-#MazeFileName
-mazedataname = 'maze_03'
 
-#出發點，起始分數，出發點不算分數，故為 -1
+mazedataname = 'maze_03'                #MazeFileName
+                                        #出發點，起始分數，出發點不算分數，故為 -1
 goal = [ ]
 path =[ ]
 score =-1
@@ -23,15 +22,16 @@ def maze():
     oled.fill(0)
     global direction , x , y
     data = open('data/maze/'+mazedataname,'r')
-    head = data.readline().split(',')  #第一行 head 資料 str -> list
-    num = len(head)-1                  #計算list內資料量，
-    b = head[:num]                     #後皆換行符號，捨棄
+    head = data.readline().split(',')   #第一行 head 資料 str -> list
+    num = len(head)-1                   #計算list內資料量，
+    b = head[:num]                      #後皆換行符號，捨棄
     
-    direction = int(b[0])           #第 1 碼:方向(0~3 = 右下左上)
-    x = int(b[1])   # 2~3 :start x ,y
+    direction = int(b[0])               #第 1 碼:方向(0~3 = 右下左上)
+    x = int(b[1])                       # 2~3 :start x ,y
     y = int(b[2])
-    for i in range(int((num-3)/2)): # 去掉 b[0]~b[2]，剩下皆為 goal point，計算個數
+    for i in range(int((num-3)/2)):     # 去掉 b[0]~b[2]，剩下皆為 goal point，計算個數
         goal.append([b[2*i+3],b[2*i+4]])#加入空白 goal
+
     #以下處理迷宮座標資料，使用 readlines 讀取剩餘資料
     mazelist = data.readlines()
     for line in mazelist:
@@ -39,7 +39,7 @@ def maze():
         for i in range(len(a)):
             xAxis = int(a[i].split(',')[0])
             yAxis = int(a[i].split(',')[1])
-            #oled.pixel(xAxis,yAxis,1)
+            oled.pixel(xAxis,yAxis,1)
             path.append([xAxis,yAxis])
     data.close()
     oled.show()
