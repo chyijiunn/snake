@@ -12,7 +12,7 @@ buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
 oled.fill(0)
 
-mazedataname = 'maze_04'                #MazeFileName
+mazedataname = 'maze_01'                #MazeFileName
 #出發點，起始分數，出發點不算分數，故為 -1
 goal = [ ]
 path =[ ]
@@ -55,7 +55,8 @@ def button_thread():
         sleep(0.15) 
 
 def scoreshow(score):
-    oled.text('score '+str(score),35,55)
+    oled.fill_rect(0, 55, 127, 63, 1)
+    oled.text('score '+str(score),35,55,0)
     data = open('data/maze/'+mazedataname+'_r')
     top = int(data.readline())
     
@@ -64,7 +65,8 @@ def scoreshow(score):
         data.write(str(score))
         top = score
         
-    oled.text('TOP '+str(top),40,0)
+    oled.fill_rect(0, 0, 127, 7, 1)
+    oled.text('TOP '+str(top),40,0,0)
     data.close()
     oled.show()
     
