@@ -24,7 +24,7 @@ path =[]
 
 def maze():
     oled.fill(0)
-    data = open('data/maze/maze_S','r')
+    data = open('data/maze/01','r')
     for line in data:
         a = line.split()
         for i in range(len(a)):
