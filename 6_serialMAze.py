@@ -76,7 +76,7 @@ def scoreshow(score,mazeName):
     
 _thread.start_new_thread(button_thread, ())
 
-for fileSerial in range(1,4):
+for fileSerial in range(8):
     maze(fileSerial)
     while True:
         if direction % 4 == 0:x += 1
@@ -97,12 +97,10 @@ for fileSerial in range(1,4):
         oled.text('Pass!',40,55)
         oled.show()
         del path[:]#path清空
-        sleep(1)
-        oled.fill(0)
-        oled.text('>>',20,30)
-        for pixel in range(8):
+        #oled.fill(0)
+        #oled.text('>>',20,30)
+        for pixel in range(10):
             oled.scroll(10,0)
-            sleep(0.01)
             oled.show()
         
         break
