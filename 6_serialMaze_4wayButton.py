@@ -7,8 +7,12 @@ buzzer = PWM(Pin(12))
 buzzer.freq(500)
 i2c=I2C(0,sda=Pin(20), scl=Pin(21), freq=40000)
 oled = SSD1306_I2C(128, 64, i2c)
-buttonR = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)#press = 0 , unpress = 1
-buttonL = machine.Pin(16, machine.Pin.IN, machine.Pin.PULL_UP)
+buttonU = machine.Pin(1, machine.Pin.IN, machine.Pin.PULL_UP)#press = 0 , unpress = 1
+buttonD = machine.Pin(0, machine.Pin.IN, machine.Pin.PULL_UP)
+buttonL = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_UP)
+buttonR = machine.Pin(3, machine.Pin.IN, machine.Pin.PULL_UP)
+buttonA = machine.Pin(4, machine.Pin.IN, machine.Pin.PULL_UP)
+buttonB = machine.Pin(5, machine.Pin.IN, machine.Pin.PULL_UP)
 
 #MazeData
 
@@ -47,10 +51,12 @@ def maze(fileSerial):
 def button_thread():
     global direction
     while True:
-        if buttonR.value() == 0:direction = direction + 1
-        if buttonL.value() == 0:direction = direction - 1
-        if buttonR.value() == 0 and buttonL.value() == 0:break
-        sleep(0.15) 
+        if buttonU.value() == 0 : direction = 0
+        elif buttonD.value() == 0 : direction = 1
+        elif buttonL.value() == 0 : direction = 2
+        elif buttonR.value() == 0 : direction = 3
+
+        sleep(0.05) 
 
 def scoreshow(score,mazeName):
     buzzer.duty_u16(1000)
@@ -79,10 +85,15 @@ _thread.start_new_thread(button_thread, ())
 for fileSerial in range(8):
     maze(fileSerial)
     while True:
-        if direction % 4 == 0:x += 1
-        if direction % 4 == 1:y +=  1
-        if direction % 4 == 2:x -= 1
-        if direction % 4 == 3:y -= 1
+        if  direction == 0  : y -= 1
+        elif direction == 1: y += 1
+        elif direction == 2 : x -= 1 
+        elif direction == 3: x += 1
+        
+        if x > 128: x =0
+        if x <0: x = 128
+        if y > 64 : y =0
+        if y <0 : y = 64
         
         oled.pixel(x,y,1)
         score = score + 1
@@ -91,15 +102,21 @@ for fileSerial in range(8):
         if [x,y] in path:
             scoreshow(score,fileSerial)
             sys.exit()
-        path.append([x,y])
             
+        path.append([x,y])
+        
+        if buttonA.value() == 0 and buttonB.value() == 0:sys.exit()
+        
         if not ([x,y] in goal) : continue
         oled.text('Pass!',40,55)
         oled.show()
-        del path[:]
-        del goal[:]
-        for pixel in range(10):
-            oled.scroll(10,0)
-            oled.show()
+        del path[:]#path清空
+        del goal[:]#goal清空
         
+        #oled.fill(0)
+        #oled.text('>>',20,30)
+        for pixel in range(15):
+            oled.scroll(-8,0)
+            oled.show()
+    
         break

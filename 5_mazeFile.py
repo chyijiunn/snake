@@ -12,7 +12,7 @@ buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
 oled.fill(0)
 
-mazedataname = '01'                #MazeFileName
+mazedataname = '04'                #MazeFileName
 #出發點，起始分數，出發點不算分數，故為 -1
 goal = [ ]
 path =[ ]
