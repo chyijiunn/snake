@@ -14,6 +14,8 @@ x = 64
 y = 32
 direction = 0
 path =[]
+goal = []
+
 def button_thread():
     global direction
     while True:
@@ -34,9 +36,38 @@ def fail():
     data.close()
     oled.show()
     buzzer.duty_u16(0)
+    
+def maze(fileSerial):
+    global direction
+    global x , y
+    mazeName = '{:0>2}'.format(fileSerial)#格式化、前面補零
+    oled.fill(0)
+    data = open('data/maze/'+mazeName,'r')
+    head = data.readline().split(',')   
+    num = len(head)-1                   
+    b = head[:num]                      
+    
+    direction = int(b[0])          
+    x = int(b[1])                   
+    y = int(b[2])
+    for i in range(int((num-3)/2)):   
+        goal.append([int(b[2*i+3]),int(b[2*i+4])])
 
+    #以下處理迷宮座標資料，使用 readlines 讀取剩餘資料
+    mazelist = data.readlines()
+    for line in mazelist:
+        a = line.split()
+        for i in range(len(a)):
+            xAxis = int(a[i].split(',')[0])
+            yAxis = int(a[i].split(',')[1])
+            oled.pixel(xAxis,yAxis,1)
+            path.append([xAxis,yAxis])
+    data.close()
+    oled.show()
+    
 _thread.start_new_thread(button_thread, ())
 
+maze(1)
 while True:
     if x > 128: x =0
     if x <0: x = 128
