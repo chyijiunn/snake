@@ -21,7 +21,7 @@ def button_thread():
     while True:
         if buttonR.value() == 0:direction = direction + 1
         if buttonL.value() == 0:direction = direction - 1
-        sleep(0.1)
+        sleep(0.14)
 
 def fail():
     buzzer.duty_u16(1000)
@@ -67,7 +67,7 @@ def maze(fileSerial):
     
 _thread.start_new_thread(button_thread, ())
 
-maze(1)
+maze(0)
 while True:
     if x > 128: x =0
     if x <0: x = 128

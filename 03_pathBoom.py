@@ -20,7 +20,7 @@ def button_thread():
     while True:
         if buttonR.value() == 0:direction = direction + 1
         if buttonL.value() == 0:direction = direction - 1
-        sleep(0.1)
+        sleep(0.14)
     
 _thread.start_new_thread(button_thread, ())
 
