@@ -6,13 +6,13 @@
 	+ 按鈕*3
 	+ 有源蜂鳴器
 	+ M2 , M3 螺絲 = 6 , 4
-1. 組裝
+1. 配置
 	1. 根據接線圖銲接 OLED 與 pico
 		+ 接線圖 ![pin](/media/RetroBoy.png)
 	1. 放按鈕、蜂鳴器於下層壓克力板
 	1. 放上pico板、銲接按鈕與蜂鳴器、鎖 M2 螺絲
 
-![TinkerCAD](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)<https://www.tinkercad.com/things/jjDYlHlW5t2>
+	1. 組裝圖 ![TinkerCAD](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)<https://www.tinkercad.com/things/jjDYlHlW5t2>
 1. 
 ## 課程流程
 1. 嘗試作一個類似貪食蛇的遊戲
