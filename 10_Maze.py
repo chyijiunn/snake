@@ -118,10 +118,10 @@ for fileSerial in range(8):
         if not ( [x,y]  in goal ):continue
         del path[:]
         del goal[:]
-        oled.text('Pass!',40,55)
+        oled.text('Bravo!',40,55)
         scoreshow(score,fileSerial)
         oled.show()            
-        for pixel in range(16):
+        for pixel in range(20):
             oled.scroll(-8,0)
             oled.show()
         break
