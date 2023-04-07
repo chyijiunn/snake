@@ -18,7 +18,7 @@
 
 	1. 組裝圖 ![TinkerCAD](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)<https://www.tinkercad.com/things/jjDYlHlW5t2>
 ## 流程
-1. pinTest 硬體測試
+0. pinTest 硬體測試
 	+ OLED 管理套件 - 安裝 ssd1306(micropython-ssd1306)
 	+ 按鈕
 	+ 蜂鳴器
