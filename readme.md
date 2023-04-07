@@ -2,13 +2,18 @@
 ## 硬體組裝
 1. 材料
 	+ raspberry pico 
+	+ OLED 0.96":I2C(VCC - GND - SCL - SDA)
 	+ 按鈕*3
 	+ 有源蜂鳴器
-	+ OLED 0.96":I2C(VCC - GND - SCL - SDA)
 	+ M2 , M3 螺絲 = 6 , 4
-1. 組裝 ![TinkerCAD](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)<https://www.tinkercad.com/things/jjDYlHlW5t2>
-1. 接線 ![pin](/media/RetroBoy.png)
+1. 組裝
+	1. 根據接線圖銲接 OLED 與 pico
+		+ 接線圖 ![pin](/media/RetroBoy.png)
+	1. 放按鈕、蜂鳴器於下層壓克力板
+	1. 放上pico板、銲接按鈕與蜂鳴器、鎖 M2 螺絲
 
+![TinkerCAD](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)<https://www.tinkercad.com/things/jjDYlHlW5t2>
+1. 
 ## 課程流程
 1. 嘗試作一個類似貪食蛇的遊戲
 2. 按鈕只有兩顆時，利用一個 thread 讀取方向、主 main 進行移動
