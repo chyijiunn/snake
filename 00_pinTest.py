@@ -12,7 +12,7 @@ buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 oled.fill(0)
 oled.text('hello',0,0)
 oled.text('hello2',0,10)#寫文字於(0,10)
-oled.line(127,0,0,63,1)#畫條線(x0,y0,x1,y1,1)
+oled.line(0,15,127,15,1)#畫條線(x0,y0,x1,y1,1)
 oled.pixel(64,30,1)#放一個點於64,30
 oled.show()
 
