@@ -6,7 +6,7 @@
 	+ 有源蜂鳴器
 	+ OLED 0.96":I2C(VCC - GND - SCL - SDA)
 	+ M2 , M3 螺絲 = 6 , 4
-1. [![組裝](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)(https://www.tinkercad.com/things/jjDYlHlW5t2)] 
+1. ![組裝](https://csg.tinkercad.com/things/jjDYlHlW5t2/t725.png?rev=1680768604343000000&s=&v=1)<https://www.tinkercad.com/things/jjDYlHlW5t2)>
 
 ## 課程流程
 1. 嘗試作一個類似貪食蛇的遊戲
