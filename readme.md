@@ -6,7 +6,8 @@
 	+ 有源蜂鳴器
 	+ OLED 0.96":I2C(VCC - GND - SCL - SDA)
 	+ M2 , M3 螺絲 = 6 , 4
-1. 組裝 <iframe width="725" height="453" src="https://www.tinkercad.com/embed/jjDYlHlW5t2?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+1. 組裝 
+ <iframe width="725" height="453" src="https://www.tinkercad.com/embed/jjDYlHlW5t2?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 ## 課程流程
 1. 嘗試作一個類似貪食蛇的遊戲
 2. 按鈕只有兩顆時，利用一個 thread 讀取方向、主 main 進行移動
