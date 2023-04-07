@@ -1,17 +1,15 @@
-from machine import Pin, I2C,PWM
+from machine import Pin, I2C
 from ssd1306 import SSD1306_I2C
 from time import sleep
 import _thread
 
-buzzer = PWM(Pin(7))
-buzzer.freq(500)
-i2c=I2C(0,sda=Pin(20), scl=Pin(21), freq=40000)
-oled = SSD1306_I2C(128, 64, i2c)
-buttonR = machine.Pin(3, machine.Pin.IN, machine.Pin.PULL_UP)#press = 0 , unpress = 1
+I2C(0,sda=Pin(20), scl=Pin(21), freq=40000)
+buttonR = machine.Pin(16, machine.Pin.IN, machine.Pin.PULL_UP)
 buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
+buzzer = PWM(Pin(12))
+buzzer.freq(500)
 
 oled.fill(0)
-
 x = 64
 y = 32
 direction = 0
