@@ -7,7 +7,7 @@ buzzer = PWM(Pin(7))
 buzzer.freq(500)
 i2c=I2C(0,sda=Pin(20), scl=Pin(21), freq=40000)
 oled = SSD1306_I2C(128, 64, i2c)
-buttonR = machine.Pin(3, machine.Pin.IN, machine.Pin.PULL_UP)#press = 0 , unpress = 1
+buttonR = machine.Pin(16, machine.Pin.IN, machine.Pin.PULL_UP)#press = 0 , unpress = 1
 buttonL = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
 oled.fill(0)
