@@ -44,6 +44,12 @@
 	+ 把軌跡存成 list
 1. 如果在軌跡內，則....
 1. 讀取檔案
+	+ open
+	+ for line in data
+	+ list
+		+ len(a)
+		+ a[0]
+		+ .split(,)
 1. 失敗了。就爆炸吧
 	+ 定義函式
 	+ 繪圖
