@@ -42,8 +42,4 @@ while True:
     if buttonR.value() == 0 and buttonL.value() == 0:break
     
     oled.show()
-    if [x,y] in path:
-        buzzer.duty_u16(1000)
-        sleep(5)
-        
     path.append([x,y])

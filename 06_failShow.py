@@ -1,4 +1,3 @@
-#def 一個失敗後要執行的函式
 from machine import Pin, I2C,PWM
 from ssd1306 import SSD1306_I2C
 from time import sleep
@@ -21,21 +20,10 @@ def button_thread():
         if buttonR.value() == 0:direction = direction + 1
         if buttonL.value() == 0:direction = direction - 1
         sleep(0.14)
-'''    
+        
+#def 一個失敗後要執行的函式
 def fail():
-    buzzer.duty_u16(1000)
-    oled.fill(0)
-    data = open('data/pics/boom','r')
-    for line in data:
-        a = line.split()
-        for i in range(len(a)):
-            xAxis = int(a[i].split(',')[0])
-            yAxis = int(a[i].split(',')[1])
-            oled.pixel(xAxis,yAxis,1)
-    data.close()
-    oled.show()
-    buzzer.duty_u16(0)
-'''
+
 _thread.start_new_thread(button_thread, ())
 
 while True:

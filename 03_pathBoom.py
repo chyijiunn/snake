@@ -1,3 +1,6 @@
+#新增一個可記錄路徑的 list
+#path =[]
+#path.append([x,y])應該放哪裡？
 from machine import Pin, I2C,PWM
 from ssd1306 import SSD1306_I2C
 from time import sleep
@@ -13,8 +16,7 @@ oled.fill(0)
 x = 64
 y = 32
 direction = 0
-#path =[]
-#path.append([x,y])
+
 def button_thread():
     global direction
     while True:
